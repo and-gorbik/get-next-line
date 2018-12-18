@@ -6,7 +6,7 @@
 /*   By: sjacelyn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:41:20 by sjacelyn          #+#    #+#             */
-/*   Updated: 2018/12/18 16:41:23 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2018/12/18 17:28:18 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			get_next_line(const int fd, char **line)
 	char		*pbuf;
 	int			status;
 
-	if (fd < 0 || !line)
+	if (fd < 0 || !line || read(fd, buf, 0) < 0)
 		return (-1);
 	if (!(*line = ft_strnew(0)))
 		return (-1);
