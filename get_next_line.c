@@ -1,7 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjacelyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/18 16:41:20 by sjacelyn          #+#    #+#             */
+/*   Updated: 2018/12/18 16:41:23 by sjacelyn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 /*
-** return: 1 - string is complete, -1 - error, 0 - next filling the buf from file
+** return:
+** 1 - string is complete,
+** -1 - error,
+** 0 - next filling the buf from file
 */
 
 static int	read_line(char **buf, char **line, char delim)
@@ -24,13 +39,13 @@ static int	read_line(char **buf, char **line, char delim)
 	if (!(*line = ft_strjoin(prev, ft_strncpy(chunk, *buf, sub - *buf))))
 		status = -1;
 	else
-		ft_strcpy(*buf, sub + status); // если '\n', то передвинуть указатель
+		ft_strcpy(*buf, sub + status);
 	free(chunk);
 	free(prev);
 	return (status);
 }
 
-int	get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
 	static char	buf[BUFF_SIZE + 1];
 	char		*pbuf;
