@@ -33,15 +33,14 @@ static int	read_line_from_buffer(char **buf, char **line, char delim)
 		status = 0;
 		sub = *buf + ft_strlen(*buf);
 	}
-	if (!(chunk = ft_strnew(sub - *buf)))
-		return (-1);
+	CHECK_ERROR((chunk = ft_strnew(sub - *buf)))
 	prev = *line;
 	if (!(*line = ft_strjoin(prev, ft_strncpy(chunk, *buf, sub - *buf))))
 		status = -1;
 	else
-		ft_strcpy(*buf, sub + status);
-	free(chunk);
-	free(prev);
+		ft_strcpy(*buf, status ? sub + 1 : sub);
+	ft_memdel((void **)&chunk);
+	ft_memdel((void **)&prev);
 	return (status);
 }
 
@@ -79,7 +78,7 @@ static char	*get_buffer(t_list **lst, int fd)
 	t_buf	*cur;
 	t_list	*item;
 
-	if (!lst || fd < 0 || read(fd, b, 0) < 0)
+	if (!lst || fd < 0 || fd == 1 || fd == 2 || read(fd, b, 0) < 0)
 		return (NULL);
 	item = *lst;
 	while (item)
@@ -136,10 +135,9 @@ int			get_next_line(const int fd, char **line)
 	char			*buf;
 	int				status;
 
-	if (!line || !(buf = get_buffer(&bufs, fd)))
-		return (-1);
-	if (!(*line = ft_strnew(0)))
-		return (-1);
+	CHECK_ERROR(line && BUFF_SIZE > 0)
+	CHECK_ERROR((buf = get_buffer(&bufs, fd)))
+	CHECK_ERROR((*line = ft_strnew(0)))
 	if (!buf[0])
 		buf[read(fd, buf, BUFF_SIZE)] = '\0';
 	if (!buf[0])

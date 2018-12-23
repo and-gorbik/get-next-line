@@ -13,9 +13,11 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include "libft/libft.h"
+# define BUFF_SIZE 21
 
-# define BUFF_SIZE (1 << 8)
+# define CHECK_ERROR(x) if (!x) return (-1);
+
+# include "libft/libft.h"
 
 typedef struct	s_buf
 {
